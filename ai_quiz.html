@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Chapter 1 — Quiz (Theory + MCQ)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7fbff;
+      --card:#fff;
+      --accent:#1d6ad8;
+      --accent-2:#2b8a78;
+      --good:#2f855a;
+      --bad:#c53030;
+      --muted:#556;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Cairo",sans-serif;background:var(--bg);color:#111;line-height:1.6;padding:16px}
+    .container{max-width:1100px;margin:12px auto}
+    header{background:linear-gradient(90deg, rgba(29,106,216,0.06), rgba(43,138,120,0.03));padding:14px;border-left:6px solid var(--accent);border-radius:10px}
+    header h1{margin:0;color:var(--accent)}
+    header p{margin:8px 0 0;color:var(--muted)}
+    .card{background:var(--card);padding:16px;border-radius:10px;margin-top:14px;box-shadow:0 10px 30px rgba(10,30,60,0.04)}
+    h2{color:var(--accent);margin-top:0}
+    .theory-list{list-style:none;padding:0;margin:0}
+    .theory-item{border:1px solid #eef6ff;background:#fbfeff;padding:12px;border-radius:8px;margin-bottom:10px;cursor:pointer}
+    .theory-q{font-weight:700;color:var(--accent)}
+    .theory-a{display:none;margin-top:8px;color:var(--good);background:#f1fbf6;padding:10px;border-radius:6px;border:1px solid rgba(47,133,90,0.08)}
+    .qcard{border:1px solid #e6eef9;background:#fff;padding:12px;border-radius:10px;margin-bottom:12px}
+    .qtitle{font-weight:700;color:var(--accent);margin:0 0 8px 0}
+    .options{display:flex;flex-direction:column;gap:8px}
+    .option{background:#f8fbff;border:1px solid #dbeeff;padding:10px;border-radius:8px;cursor:pointer;font-weight:600}
+    .option:hover{background:#eef8ff}
+    .option.correct{background:#dff6e9;border-color:rgba(47,133,90,0.35);color:var(--good)}
+    .option.wrong{background:#ffecec;border-color:rgba(197,48,48,0.2);color:var(--bad)}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(29,106,216,0.12)}
+    .result{margin-top:12px;font-weight:800;color:var(--accent);font-size:18px}
+    @media(max-width:720px){ .options{gap:6px} .theory-a{font-size:14px} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AI — Chapter 1 Quiz</h1>
+      <p>20 سؤالًا نظريًا (اضغط لعرض الإجابة) + 20 سؤال اختيار من متعدد مع التقييم التلقائي.</p>
+    </header>
+
+    <section class="card">
+      <h2>أسئلة نظرية — Theoretical Questions</h2>
+      <ul id="theoryList" class="theory-list"></ul>
+      <small style="color:var(--muted)">اضغط على السؤال لعرض الإجابة بالعربية والإنجليزية.</small>
+    </section>
+
+    <section class="card">
+      <h2>اختبار QCM — Multiple Choice Questions (20)</h2>
+      <div id="quizContainer"></div>
+
+      <div class="controls">
+        <button id="showScoreBtn" class="btn">عرض النتيجة — Show Score</button>
+        <button id="resetBtn" class="btn secondary">إعادة تعيين — Reset</button>
+        <div id="scoreBox" class="result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <footer style="text-align:center;margin-top:14px;color:var(--muted)">Prepared from Chapter 1: Introduction to AI.</footer>
+  </div>
+
+  <script>
+    // ---------- Theory questions (20) ----------
+    const theoryQuestions = [
+      { q_ar:"1) ما تعريف الذكاء؟", q_en:"1) What is intelligence?",
+        a_ar:"القدرة على التعلم، التفكير وحل المشكلات والتكيّف مع المواقف الجديدة.", a_en:"The ability to learn, reason, solve problems and adapt to new situations." },
+      { q_ar:"2) من رائد مصطلح AI؟", q_en:"2) Who coined the term 'AI'?",
+        a_ar:"John McCarthy في مؤتمر دارتموث 1956.", a_en:"John McCarthy at the Dartmouth conference in 1956." },
+      { q_ar:"3) ما الفرق بين 'Act like a human' و 'Act rationally'؟", q_en:"3) Difference between 'Act like a human' and 'Act rationally'?",
+        a_ar:"الأول يركز على محاكاة سلوك البشر، الثاني على اتخاذ قرارات عقلانية تحقق أهدافًا.", a_en:"The first focuses on imitating humans; the second on rational actions that achieve goals." },
+      { q_ar:"4) اذكر أمثلة لتطبيقات AI.", q_en:"4) Give examples of AI applications.",
+        a_ar:"التعرف على الصور، NLP، السيارات الذاتية، التوصية، الطب.", a_en:"Image recognition, NLP, autonomous cars, recommendation systems, healthcare." },
+      { q_ar:"5) ماذا تقصد بالمنهج الرمزي؟", q_en:"5) What is the symbolic approach?",
+        a_ar:"يعتمد على قواعد ومنطق لتمثيل المعرفة وحل المشكلات.", a_en:"Uses rules and logic to represent knowledge and solve problems." },
+      { q_ar:"6) ما هو المنهج الإحصائي؟", q_en:"6) What is the statistical (ML) approach?",
+        a_ar:"يعتمد على البيانات ويستخلص نماذج للتنبؤ أو التصنيف.", a_en:"Relies on data to learn models for prediction or classification." },
+      { q_ar:"7) لماذا أهمية الذكاء الاصطناعي في الطب؟", q_en:"7) Why is AI important in healthcare?",
+        a_ar:"لتشخيص أسرع وأكثر دقة، وتخصيص العلاج، وتحليل بيانات المرضى.", a_en:"For faster, more accurate diagnosis, personalized treatment, and data analysis." },
+      { q_ar:"8) ما الهدف من أنظمة الخبراء؟", q_en:"8) What is the goal of expert systems?",
+        a_ar:"محاكاة خبرة البشر لاتخاذ قرارات في مجالات محددة.", a_en:"To emulate human expertise for decision making in specific domains." },
+      { q_ar:"9) ما المقصود بـ 'Machine Learning'؟", q_en:"9) What is Machine Learning?",
+        a_ar:"مجال من AI يعلّم الآلات استنتاج الأنماط من البيانات.", a_en:"A field of AI that enables machines to learn patterns from data." },
+      { q_ar:"10) ما هي الشبكات العصبية؟", q_en:"10) What are neural networks?",
+        a_ar:"نماذج مستوحاة من الدماغ تتكون من وحدات مترابطة لمعالجة المعلومات.", a_en:"Brain-inspired models composed of interconnected units to process information." },
+      { q_ar:"11) ما هو NLP؟", q_en:"11) What is NLP?",
+        a_ar:"معالجة اللغة الطبيعية لفهم وتوليد النصوص والكلام.", a_en:"Natural Language Processing for understanding and generating text and speech." },
+      { q_ar:"12) ما المقصود بـ 'agent' في AI؟", q_en:"12) What is an agent in AI?",
+        a_ar:"كيان يتلقى مدخلات من البيئة ويتخذ أفعالًا لتحقيق أهداف.", a_en:"An entity that perceives environment and acts to achieve goals." },
+      { q_ar:"13) ما هي أهمية البيانات في ML؟", q_en:"13) Why is data important in ML?",
+        a_ar:"لأن جودة وكميات البيانات تحدد دقة النموذج وفعاليته.", a_en:"Because model accuracy and effectiveness depend on data quality and quantity." },
+      { q_ar:"14) ما معنى 'overfitting'؟", q_en:"14) What is overfitting?",
+        a_ar:"عندما يتعلم النموذج تفاصيل الضوضاء في البيانات ولا يعمم جيدًا.", a_en:"When a model learns noise in training data and fails to generalize." },
+      { q_ar:"15) ما هي الأخلاقيات في AI؟", q_en:"15) What are AI ethics concerns?",
+        a_ar:"الخصوصية، التحيز، الشفافية، والمسؤولية عن القرارات.", a_en:"Privacy, bias, transparency, and accountability of decisions." },
+      { q_ar:"16) ما الفرق بين التعلم المراقب وغير المراقب؟", q_en:"16) Supervised vs Unsupervised learning?",
+        a_ar:"المراقب يستخدم بيانات معنونة، غير المراقب لا يستخدم تسميات.", a_en:"Supervised uses labeled data; unsupervised uses unlabeled data." },
+      { q_ar:"17) كيف يقاس أداء نموذج ML؟", q_en:"17) How to measure ML model performance?",
+        a_ar:"مقاييس مثل الدقة، الاستدعاء، F1، والخسارة.", a_en:"Metrics like accuracy, recall, F1-score, and loss." },
+      { q_ar:"18) ما دور البحث في AI؟", q_en:"18) Role of search in AI?",
+        a_ar:"إيجاد تسلسل من الأفعال للوصول إلى حل في فضاء الحالات.", a_en:"Finding a sequence of actions to reach a solution in state space." },
+      { q_ar:"19) لماذا نحتاج إلى التمثيل Knowledge Representation؟", q_en:"19) Why is knowledge representation needed?",
+        a_ar:"لتمكين الآلة من فهم وتمثيل المعرفة لاتخاذ قرارات ذكية.", a_en:"To enable machines to represent knowledge and make intelligent decisions." },
+      { q_ar:"20) ما مستقبل الذكاء الاصطناعي؟", q_en:"20) What is the future of AI?",
+        a_ar:"تكامل أكبر مع الأنظمة اليومية، تقدم في التعلم العميق والنماذج التوليدية مع تحديات أخلاقية وقانونية.", a_en:"Greater integration in daily systems, advances in deep learning & generative models with ethical/legal challenges." }
+    ];
+
+    // render theory list
+    const theoryListEl = document.getElementById('theoryList');
+    theoryQuestions.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'theory-item';
+      li.innerHTML = `<div class="theory-q">${item.q_ar} <span style="font-weight:600;color:var(--muted)">/ ${item.q_en}</span></div>
+                      <div class="theory-a"><strong>العربية:</strong> ${item.a_ar}<br><strong>English:</strong> ${item.a_en}</div>`;
+      li.addEventListener('click', () => {
+        const a = li.querySelector('.theory-a');
+        a.style.display = (a.style.display === 'block') ? 'none' : 'block';
+      });
+      theoryListEl.appendChild(li);
+    });
+
+    // ---------- QCM (20) ----------
+    const qcm = [
+      { q_ar:"1) من هو مؤسس مصطلح AI؟", q_en:"1) Who coined 'AI'?", options:["Alan Turing","John McCarthy","Marvin Minsky"], correct:1 },
+      { q_ar:"2) أي مجال يتعامل مع فهم النصوص؟", q_en:"2) Which field deals with text understanding?", options:["CV","NLP","Robotics"], correct:1 },
+      { q_ar:"3) أي تقنية تعتمد على بيانات معنونة؟", q_en:"3) Which uses labeled data?", options:["Supervised learning","Unsupervised","Reinforcement"], correct:0 },
+      { q_ar:"4) ما الذي يعنيه overfitting؟", q_en:"4) What does overfitting mean?", options:["Model generalizes well","Model fits noise","Faster training"], correct:1 },
+      { q_ar:"5) ما هدف أنظمة الخبراء؟", q_en:"5) Goal of expert systems?", options:["Create general AI","Emulate human expertise in domain","Replace hardware"], correct:1 },
+      { q_ar:"6) أي من التالي مثال على تطبيق AI؟", q_en:"6) Which is an AI application?", options:["Image Recognition","Word Processor","Spreadsheet"], correct:0 },
+      { q_ar:"7) أي خوارزمية تستخدم غالبًا في رؤية الحاسب؟", q_en:"7) Often used in computer vision?", options:["CNNs","RNNs","Decision Trees"], correct:0 },
+      { q_ar:"8) ماذا تفعل الشبكات العصبية؟", q_en:"8) What do neural networks do?", options:["Organize files","Process features and learn patterns","Compile code"], correct:1 },
+      { q_ar:"9) ما فائدة البيانات الكبيرة (Big Data)؟", q_en:"9) Benefit of Big Data?", options:["Less accuracy","Better models","No models"], correct:1 },
+      { q_ar:"10) أي مبدأ يتعلق بالشفافية؟", q_en:"10) Which concerns transparency?", options:["Explainability","Speed","Storage"], correct:0 },
+      { q_ar:"11) ما نوع التعلم الذي يتعلم من مكافآت؟", q_en:"11) Learning type using rewards?", options:["Supervised","Unsupervised","Reinforcement"], correct:2 },
+      { q_ar:"12) أي مقياس يقيس دقة التصنيف؟", q_en:"12) Metric for classification accuracy?", options:["Recall","Accuracy","F1"], correct:1 },
+      { q_ar:"13) ماذا يعني 'agent'؟", q_en:"13) What is an agent?", options:["A dataset","An entity acting in environment","A loss function"], correct:1 },
+      { q_ar:"14) أي من التالي ليس منهجًا في AI؟", q_en:"14) Which is NOT an AI approach?", options:["Symbolic","Statistical","Carpentry"], correct:2 },
+      { q_ar:"15) ما الذي يعالج الصور والفيديو؟", q_en:"15) Which handles images & video?", options:["NLP","Computer Vision","Planning"], correct:1 },
+      { q_ar:"16) ما خطر التحيز في ML؟", q_en:"16) What is the risk of bias?", options:["Fair decisions","Unfair outcomes","Faster training"], correct:1 },
+      { q_ar:"17) أي أداة تستخدم لتقييم أداء النموذج؟", q_en:"17) Tool to evaluate model?", options:["Metrics like F1","Photoshop","Text editor"], correct:0 },
+      { q_ar:"18) ما الذي يميّز التعلم العميق؟", q_en:"18) Deep learning is characterized by?", options:["Shallow models","Many layers in neural nets","No training data"], correct:1 },
+      { q_ar:"19) ما فائدة البحث (Search) في AI؟", q_en:"19) Benefit of search in AI?", options:["UI design","Find solutions in state spaces","Memory management"], correct:1 },
+      { q_ar:"20) ما أهمية الأخلاقيات في AI؟", q_en:"20) Why ethics matter in AI?", options:["For fun","To ensure fairness & safety","To slow progress"], correct:1 }
+    ];
+
+    // render QCM
+    const quizContainer = document.getElementById('quizContainer');
+    let score = 0, answered = 0;
+    qcm.forEach((item, idx) => {
+      const card = document.createElement('div');
+      card.className = 'qcard';
+      card.innerHTML = `<div class="qtitle">${item.q_ar} <span style="font-weight:600;color:var(--muted)">/ ${item.q_en}</span></div>`;
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'options';
+      item.options.forEach((opt, i) => {
+        const o = document.createElement('div');
+        o.className = 'option';
+        o.textContent = opt;
+        o.tabIndex = 0;
+        o.addEventListener('click', () => {
+          if (card.dataset.answered === 'true') return;
+          card.dataset.answered = 'true';
+          answered++;
+          if (i === item.correct) {
+            o.classList.add('correct');
+            score++;
+          } else {
+            o.classList.add('wrong');
+            const children = optsDiv.querySelectorAll('.option');
+            if (children[item.correct]) children[item.correct].classList.add('correct');
+          }
+        });
+        optsDiv.appendChild(o);
+      });
+      card.appendChild(optsDiv);
+      quizContainer.appendChild(card);
+    });
+
+    // Controls
+    const scoreBox = document.getElementById('scoreBox');
+    document.getElementById('showScoreBtn').addEventListener('click', () => {
+      scoreBox.textContent = `✅ نتيجتك: ${score} من ${qcm.length} • Your score: ${score} out of ${qcm.length}`;
+      const unansweredCount = qcm.length - answered;
+      if (unansweredCount > 0) {
+        scoreBox.textContent += ` — (لم تُجب على ${unansweredCount} سؤالًا / ${unansweredCount} unanswered)`;
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      score = 0; answered = 0; scoreBox.textContent = '';
+      document.querySelectorAll('.qcard').forEach(card => {
+        card.dataset.answered = 'false';
+        card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','wrong'));
+      });
+      document.querySelectorAll('.theory-a').forEach(a => a.style.display = 'none');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Accessibility: Enter selects focused option
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && document.activeElement.classList.contains('option')) {
+        document.activeElement.click();
+      }
+    });
+  </script>
+</body>
+</html>

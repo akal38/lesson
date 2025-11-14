@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Introduction to Artificial Intelligence — شرح (AR/EN)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f5f8ff;
+      --card:#ffffff;
+      --accent:#1d6ad8;
+      --accent-2:#2b8a78;
+      --muted:#566;
+      --note:#fff8e1;
+      --pad:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Cairo",sans-serif;background:var(--bg);color:#111;line-height:1.65}
+    .container{max-width:1100px;margin:20px auto;padding:18px}
+    header{background:linear-gradient(90deg, rgba(29,106,216,0.06), rgba(43,138,120,0.03)); padding:18px; border-left:6px solid var(--accent); border-radius:12px}
+    header h1{margin:0;color:var(--accent)}
+    header p{margin:8px 0 0;color:var(--muted)}
+    .card{background:var(--card);padding:18px;border-radius:12px;margin-top:16px;box-shadow:0 12px 30px rgba(12,30,60,0.06)}
+    h2{color:var(--accent);margin-top:0}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:880px){.two-col{grid-template-columns:1fr}}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{border:1px solid #e8f0ff;padding:10px;text-align:center}
+    th{background:var(--accent);color:#fff}
+    pre.diagram{background:#f0f6ff;padding:12px;border-radius:8px;font-family:monospace;color:#123e6b;overflow:auto}
+    .note{background:var(--note);border-left:6px solid var(--accent-2);padding:12px;border-radius:8px;color:#5a4300;margin-top:12px}
+    .btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+    ul{margin:8px 0 12px 18px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Introduction to Artificial Intelligence — مقدمة في الذكاء الاصطناعي</h1>
+      <p>شرح مبسّط باللغتين العربية والإنجليزية يغطي تعريفات، تاريخ، تطبيقات ومناهج AI.</p>
+    </header>
+
+    <div class="card">
+      <h2>1. What is Intelligence? — ما هو الذكاء؟</h2>
+      <div class="two-col">
+        <div>
+          <strong>English</strong>
+          <p>Intelligence is the ability to learn, reason, and adapt to new situations to achieve goals.</p>
+        </div>
+        <div>
+          <strong>العربية</strong>
+          <p>الذكاء هو القدرة على التعلم والتفكير والتكيّف مع المواقف الجديدة لتحقيق الأهداف.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. What is Artificial Intelligence? — ما هو الذكاء الاصطناعي؟</h2>
+      <div class="two-col">
+        <div>
+          <strong>English</strong>
+          <p>AI is the science and engineering of creating machines and programs that can perform tasks requiring human intelligence.</p>
+        </div>
+        <div>
+          <strong>العربية</strong>
+          <p>الذكاء الاصطناعي هو العلم والهندسة لصنع آلات وبرامج قادرة على أداء مهام تتطلب ذكاءً بشريًا.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. Definitions / التوجهات في تعريف AI</h2>
+      <table>
+        <thead><tr><th>Approach</th><th>Short idea</th></tr></thead>
+        <tbody>
+          <tr><td>Think like a human</td><td>Simulate human thinking</td></tr>
+          <tr><td>Act like a human</td><td>Pass the Turing Test</td></tr>
+          <tr><td>Think rationally</td><td>Use logic and reasoning</td></tr>
+          <tr><td>Act rationally</td><td>Rational agents that maximize goals</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>4. Applications of AI — تطبيقات الذكاء الاصطناعي</h2>
+      <div class="two-col">
+        <div>
+          <strong>English</strong>
+          <ul>
+            <li>Image & speech recognition</li>
+            <li>Natural Language Processing (NLP)</li>
+            <li>Healthcare diagnostics</li>
+            <li>Autonomous vehicles</li>
+            <li>Recommendation systems</li>
+          </ul>
+        </div>
+        <div>
+          <strong>العربية</strong>
+          <ul>
+            <li>التعرّف على الصور والصوت</li>
+            <li>معالجة اللغة الطبيعية</li>
+            <li>التشخيص الطبي</li>
+            <li>المركبات الذاتية القيادة</li>
+            <li>أنظمة التوصية</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5. Importance of AI — أهمية الذكاء الاصطناعي</h2>
+      <div class="two-col">
+        <div>
+          <strong>English</strong>
+          <ul>
+            <li>Increase efficiency and automation</li>
+            <li>Better decision making using data</li>
+            <li>Innovative products & personalized services</li>
+          </ul>
+        </div>
+        <div>
+          <strong>العربية</strong>
+          <ul>
+            <li>زيادة الكفاءة والأتمتة</li>
+            <li>اتخاذ قرارات أفضل عن طريق البيانات</li>
+            <li>ابتكارات وتجارب مخصصة للمستخدم</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>6. History of AI — تاريخ الذكاء الاصطناعي (موجز)</h2>
+      <table>
+        <thead><tr><th>Period</th><th>Highlight</th></tr></thead>
+        <tbody>
+          <tr><td>1943–1952</td><td>Early neural models (McCulloch & Pitts)</td></tr>
+          <tr><td>1956</td><td>Dartmouth conference — term "AI" coined</td></tr>
+          <tr><td>1980s</td><td>Expert systems era</td></tr>
+          <tr><td>1997</td><td>Deep Blue beats world chess champion</td></tr>
+          <tr><td>2010s–Now</td><td>Deep learning, large-scale AI systems</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>7. AI Approaches — المناهج والاتجاهات</h2>
+      <div class="two-col">
+        <div>
+          <strong>English</strong>
+          <ul>
+            <li>Symbolic / Logic-based</li>
+            <li>Statistical / Machine Learning</li>
+            <li>Cognitive / Human-inspired</li>
+            <li>Bio-inspired (neural networks)</li>
+          </ul>
+        </div>
+        <div>
+          <strong>العربية</strong>
+          <ul>
+            <li>المنهج الرمزي (القواعد والمنطق)</li>
+            <li>المنهج الإحصائي (تعلم الآلة)</li>
+            <li>المنهج المعرفي (محاكاة العقل البشري)</li>
+            <li>مستوحى من الطبيعة (الشبكات العصبية)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>8. Simple Diagram — رسم توضيحي</h2>
+      <pre class="diagram">
+AI Topics
+│
+├── Knowledge & Logic
+├── Search & Planning
+├── Machine Learning (Supervised, Unsupervised, RL)
+├── Natural Language Processing
+└── Computer Vision & Robotics
+      </pre>
+    </div>
+
+    <div class="card">
+      <h2>9. Summary — الخلاصة</h2>
+      <ul>
+        <li>AI aims to create systems that can perform intelligent tasks.</li>
+        <li>Approaches vary: symbolic, statistical, bio-inspired.</li>
+        <li>Applications span medicine, transport, finance, education, and more.</li>
+      </ul>
+      <p style="margin-top:12px"><a class="btn" href="ai_quiz.html">اذهب إلى صفحة الاختبار — Go to Quiz</a></p>
+    </div>
+
+    <footer>Prepared for study — جاهز للمراجعة والطباعة.</footer>
+  </div>
+</body>
+</html>
